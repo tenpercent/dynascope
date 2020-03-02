@@ -22,6 +22,8 @@ class AppGLRenderer: GLSurfaceView.Renderer {
 
     private val rotationSpeedAnglesMs = -0.36f
 
+    private fun turnsPerSecToAnglePerMillis(turns: Float = 1.0f) = turns * rotationSpeedAnglesMs
+
     override fun onDrawFrame(unused: GL10?) {
 
         val currentTime: Long = uptimeMillis()
@@ -33,15 +35,16 @@ class AppGLRenderer: GLSurfaceView.Renderer {
         // Calculate the projection and view transformation
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
 
-        val scratch = FloatArray(16)
         val progressTime: Long = currentTime - startTime
-        val angle = rotationSpeedAnglesMs * progressTime
+        val angle = turnsPerSecToAnglePerMillis() * progressTime
 
         Matrix.setRotateM(rotationMatrix, 0, angle, 0.0f, 0.0f, -1.0f)
         // Combine the rotation matrix with the projection and camera view
         // Note that the vPMatrix factor *must be first* in order
         // for the matrix multiplication product to be correct.
-        Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0)
+        val scratch = FloatArray(16).also {
+            Matrix.multiplyMM(it, 0, vPMatrix, 0, rotationMatrix, 0)
+        }
 
         // Draw shape
         mTriangle.draw(scratch)
