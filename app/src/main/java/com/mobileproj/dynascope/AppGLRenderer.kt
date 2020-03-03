@@ -36,7 +36,7 @@ class AppGLRenderer: GLSurfaceView.Renderer {
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
 
         val progressTime: Long = currentTime - startTime
-        val angle = turnsPerSecToAnglePerMillis() * progressTime
+        val angle = turnsPerSecToAnglePerMillis(20.0f) * progressTime
 
         Matrix.setRotateM(rotationMatrix, 0, angle, 0.0f, 0.0f, -1.0f)
         // Combine the rotation matrix with the projection and camera view
