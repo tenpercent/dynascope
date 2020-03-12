@@ -3,8 +3,10 @@ package com.mobileproj.dynascope
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.room.Room
 import java.util.*
 
+// the responsibility is to hold displayed data independently of UI
 class SensorViewModel: ViewModel() {
 
     private val sensorReadingsCapacity = 84L
@@ -14,6 +16,10 @@ class SensorViewModel: ViewModel() {
 
     private val threshold = 5F
     var counter: MutableLiveData<Int> = MutableLiveData(0)
+
+//    val db: CounterDatabase by lazy {
+//        Room.databaseBuilder()
+//    }
 
     private var gyroReadings = ArrayDeque<Float>(gyroReadingsCapacity.toInt()).also {
         for (i in 0..gyroReadingsCapacity) {

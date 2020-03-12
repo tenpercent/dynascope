@@ -37,6 +37,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     api "androidx.activity:activity-ktx:1.1.0"
+    implementation "androidx.room:room-runtime:2.2.4"
+    annotationProcessor "androidx.room:room-compiler:2.2.4"
 
     api group: 'com.github.wendykierp', name: 'JTransforms', version: '3.1'
     api group: 'com.google.guava', name: 'guava', version: '28.0-android'
