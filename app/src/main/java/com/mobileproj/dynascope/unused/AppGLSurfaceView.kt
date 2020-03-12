@@ -1,7 +1,8 @@
-package com.mobileproj.dynascope
+package com.mobileproj.dynascope.unused
 
 import android.content.Context
 import android.opengl.GLSurfaceView
+import com.mobileproj.dynascope.unused.AppGLRenderer
 
 class AppGLSurfaceView(context: Context) : GLSurfaceView(context) {
     private val renderer: AppGLRenderer

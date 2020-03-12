@@ -1,4 +1,4 @@
-package com.mobileproj.dynascope
+package com.mobileproj.dynascope.unused
 
 import android.opengl.GLES20
 import android.opengl.Matrix
