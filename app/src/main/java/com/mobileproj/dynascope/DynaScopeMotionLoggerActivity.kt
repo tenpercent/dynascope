@@ -5,55 +5,41 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.hardware.SensorManager.SENSOR_DELAY_NORMAL
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.widget.TextView
-//import kotlinx.coroutines.*
-import java.util.*
+import androidx.lifecycle.ViewModelProvider
 
 
 class DynaScopeMotionLoggerActivity(): AppCompatActivity() {
 
-        private lateinit var sensorManager: SensorManager
-
-        private val gyroSensor: Sensor get() = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
-        private val accelSensor: Sensor get() = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        private val accelListener = object: SensorEventListener {
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-            }
-
-            override fun onSensorChanged(event: SensorEvent?) {
-                Log.d("debugsensor", "accel values: ${event?.values?.joinToString()}")
-            }
-
+        private val sensorManager: SensorManager by lazy {
+            getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        }
+        private val gyroSensor: Sensor by lazy {
+            sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        }
+        private val sensorViewModel: SensorViewModel by lazy {
+            ViewModelProvider(this).get(SensorViewModel::class.java)
         }
 
         private val gyroListener = object: SensorEventListener {
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-            }
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
             override fun onSensorChanged(event: SensorEvent?) {
-                Log.d("debugsensor", "gyro values: ${event?.values?.joinToString()}")
+                sensorViewModel.receiveUpdate(event?.values?.asSequence() as Sequence<Float>)
             }
         }
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-
             setContentView(R.layout.activity_main)
-
-            sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+            sensorViewModel.counter.observeForever { c -> findViewById<TextView>(R.id.counter).text = c.toString() }
         }
 
         override fun onResume() {
             super.onResume()
-            sensorManager.registerListener(gyroListener, gyroSensor, SENSOR_DELAY_NORMAL)
-            sensorManager.registerListener(accelListener, accelSensor, SENSOR_DELAY_NORMAL)
+            sensorManager.registerListener(gyroListener, gyroSensor, 50000)
         }
 
         override fun onPause() {
@@ -61,3 +47,4 @@ class DynaScopeMotionLoggerActivity(): AppCompatActivity() {
             sensorManager.unregisterListener(gyroListener)
         }
     }
+
