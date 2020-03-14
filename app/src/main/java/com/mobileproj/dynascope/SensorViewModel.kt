@@ -24,7 +24,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() =
-        (12..24).map { gyroReadings.toFloatArray().autocorr(it)  }.max() ?: 0F
+        (20..22).map { gyroReadings.toFloatArray().autocorr(it)  }.max() ?: 0F
     private val threshold = .8F
 
     private val vibrator = application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
