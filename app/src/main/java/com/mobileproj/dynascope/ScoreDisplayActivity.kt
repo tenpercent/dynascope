@@ -1,4 +1,4 @@
-package com.mobileproj.dynascope;
+package com.mobileproj.dynascope
 
 import android.content.Context
 import android.hardware.Sensor

@@ -21,7 +21,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
 
     private val dao get() = db.counterDao()
 
-    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { 0F })
+    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { 1F })
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() = gyroReadings.toFloatArray().autocorr(21)

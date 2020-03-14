@@ -3,7 +3,6 @@ package com.mobileproj.dynascope
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import java.sql.Date
 
 @Entity
 data class CounterEntity(@PrimaryKey(autoGenerate = true) val id: Int)
@@ -26,14 +25,12 @@ abstract class CounterDatabase: RoomDatabase() {
         private var instance: CounterDatabase? = null
 
         fun getDatabase(context: Context): CounterDatabase {
-            val tmp = instance
-            if (tmp != null) {
-                return tmp
-            }
+            instance?.apply { return this }
             synchronized(this) {
-                val tmp = Room.databaseBuilder(context.applicationContext, CounterDatabase::class.java, "database").build()
-                instance = tmp
-                return tmp
+                Room.databaseBuilder(context.applicationContext, CounterDatabase::class.java, "database").build().also {
+                    instance = it
+                    return@getDatabase it
+                }
             }
         }
     }
