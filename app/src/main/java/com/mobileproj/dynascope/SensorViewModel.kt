@@ -3,46 +3,46 @@ package com.mobileproj.dynascope
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.room.Room
 import kotlinx.coroutines.launch
-import java.sql.Date
 import java.util.*
 
 // the responsibility is to hold displayed data independently of UI
 class SensorViewModel(application: Application): AndroidViewModel(application) {
 
-    private val sensorReadingsCapacity = 84L
+    private val sensorReadingsCapacity = 84
     private val gyroReadingsCapacity = sensorReadingsCapacity * 3
 
     private var gyroReadingN = 0
 
-    private val threshold = 5F
-    var counter: LiveData<Int> = dao.count()
+    private val threshold = .9F
+    internal var counter: LiveData<Int> = dao.count()
 
-    val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
+    private val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
 
-    val dao get() = db.counterDao()
+    private val dao get() = db.counterDao()
 
-    private var gyroReadings = ArrayDeque<Float>(gyroReadingsCapacity.toInt()).also {
-        for (i in 0..gyroReadingsCapacity) {
-            it.add(0F)
-        }
-    }
+    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { 0F })
+
+    // cosine similarity with a time-lagged version of itself
+    private val timeLagSimilarity get() = gyroReadings.toFloatArray().autocorr(21)
 
     fun receiveUpdate(values: Sequence<Float>) {
-        synchronized(gyroReadings) {
-            gyroReadings.addAll(values)
-            while (gyroReadings.size > gyroReadingsCapacity) {
-                gyroReadings.poll()
-            }
-        }
+        gyroReadings.addAndTrim(values, gyroReadingsCapacity)
         gyroReadingN += 1
-        val autocorr = gyroReadings.toFloatArray().autocorr(21)
-        Log.d("debugsensorvm", "r: $gyroReadingN autocorr: ${autocorr}")
-        if (autocorr > threshold) {
+        Log.d("debugsensorvm", "r: $gyroReadingN autocorr: $timeLagSimilarity")
+        if (timeLagSimilarity > threshold) {
             viewModelScope.launch {
                 dao.insert(CounterEntity(0))
             }
+        }
+    }
+}
+
+fun<T> ArrayDeque<T>.addAndTrim(values: Sequence<T>, capacity: Int) {
+    synchronized(this) {
+        addAll(values)
+        while (size > capacity) {
+            poll()
         }
     }
 }
