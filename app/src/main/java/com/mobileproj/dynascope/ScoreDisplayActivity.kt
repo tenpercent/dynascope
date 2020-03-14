@@ -34,7 +34,7 @@ class ScoreDisplayActivity(): AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-            sensorViewModel.counter.observeForever { c -> findViewById<TextView>(R.id.counter).text = c.toString() }
+            sensorViewModel.registerObserver { c: Int -> findViewById<TextView>(R.id.counter).text = c.toString() }
         }
 
         override fun onResume() {

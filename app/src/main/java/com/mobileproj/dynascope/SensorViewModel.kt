@@ -15,7 +15,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private var gyroReadingN = 0
 
     private val threshold = .9F
-    internal var counter: LiveData<Int> = dao.count()
+    private var counter: LiveData<Int> = dao.count()
 
     private val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
 
@@ -36,6 +36,8 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
             }
         }
     }
+
+    fun registerObserver(f: (Int) -> Unit) = counter.observeForever(f)
 }
 
 fun<T> ArrayDeque<T>.addAndTrim(values: Sequence<T>, capacity: Int) {
