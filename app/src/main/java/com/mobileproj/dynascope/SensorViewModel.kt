@@ -44,6 +44,5 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
                 dao.insert(CounterEntity(0))
             }
         }
-//        db.counterDao().findByDate(Date.from())
     }
 }

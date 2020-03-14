@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 
 
-class DynaScopeMotionLoggerActivity(): AppCompatActivity() {
+class ScoreDisplayActivity(): AppCompatActivity() {
 
         private val sensorManager: SensorManager by lazy {
             getSystemService(Context.SENSOR_SERVICE) as SensorManager
