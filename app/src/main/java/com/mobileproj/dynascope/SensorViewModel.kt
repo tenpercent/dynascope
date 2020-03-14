@@ -12,19 +12,16 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val sensorReadingsCapacity = 84
     private val gyroReadingsCapacity = sensorReadingsCapacity * 3
 
+    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { 1F })
     private var gyroReadingN = 0
 
-    private val threshold = .9F
-    private var counter: LiveData<Int> = dao.count()
-
     private val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
-
     private val dao get() = db.counterDao()
-
-    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { 1F })
+    private val counter: LiveData<Int> = dao.count()
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() = gyroReadings.toFloatArray().autocorr(21)
+    private val threshold = .9F
 
     fun receiveUpdate(values: Sequence<Float>) {
         gyroReadings.addAndTrim(values, gyroReadingsCapacity)
