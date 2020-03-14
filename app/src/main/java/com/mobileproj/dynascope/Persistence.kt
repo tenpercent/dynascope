@@ -1,26 +1,40 @@
 package com.mobileproj.dynascope
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.*
-import java.util.*
+import java.sql.Date
 
 @Entity
-data class CounterEntity(@PrimaryKey val id: Int,
-                   @ColumnInfo(name = "date") val date: Date,
-                   @ColumnInfo(name = "counter") val counter: Int)
+data class CounterEntity(@PrimaryKey(autoGenerate = true) val id: Int)
 
 @Dao
 interface CounterDao {
-    @Query("SELECT * FROM CounterEntity WHERE date = :date LIMIT 1")
-    fun findByDate(date: Date): CounterEntity
+    @Query("SELECT COUNT(*) FROM CounterEntity")
+    fun count(): LiveData<Int>
 
     @Insert
-    fun insertAll(vararg counters: CounterEntity)
-
-    @Delete
-    fun delete(counter: CounterEntity)
+    suspend fun insert(ce: CounterEntity)
 }
 
 @Database(entities = [CounterEntity::class], version = 1)
 abstract class CounterDatabase: RoomDatabase() {
     abstract fun counterDao(): CounterDao
+
+    companion object {
+        @Volatile
+        private var instance: CounterDatabase? = null
+
+        fun getDatabase(context: Context): CounterDatabase {
+            val tmp = instance
+            if (tmp != null) {
+                return tmp
+            }
+            synchronized(this) {
+                val tmp = Room.databaseBuilder(context.applicationContext, CounterDatabase::class.java, "database").build()
+                instance = tmp
+                return tmp
+            }
+        }
+    }
 }

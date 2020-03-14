@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DynaScope</string>
+    <string name="counter">0</string>
 </resources>

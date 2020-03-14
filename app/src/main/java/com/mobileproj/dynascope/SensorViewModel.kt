@@ -1,13 +1,15 @@
 package com.mobileproj.dynascope
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.room.Room
+import kotlinx.coroutines.launch
+import java.sql.Date
 import java.util.*
 
 // the responsibility is to hold displayed data independently of UI
-class SensorViewModel: ViewModel() {
+class SensorViewModel(application: Application): AndroidViewModel(application) {
 
     private val sensorReadingsCapacity = 84L
     private val gyroReadingsCapacity = sensorReadingsCapacity * 3
@@ -15,11 +17,11 @@ class SensorViewModel: ViewModel() {
     private var gyroReadingN = 0
 
     private val threshold = 5F
-    var counter: MutableLiveData<Int> = MutableLiveData(0)
+    var counter: LiveData<Int> = dao.count()
 
-//    val db: CounterDatabase by lazy {
-//        Room.databaseBuilder()
-//    }
+    val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
+
+    val dao get() = db.counterDao()
 
     private var gyroReadings = ArrayDeque<Float>(gyroReadingsCapacity.toInt()).also {
         for (i in 0..gyroReadingsCapacity) {
@@ -38,7 +40,10 @@ class SensorViewModel: ViewModel() {
         val autocorr = gyroReadings.toFloatArray().autocorr(21)
         Log.d("debugsensorvm", "r: $gyroReadingN autocorr: ${autocorr}")
         if (autocorr > threshold) {
-            counter.postValue(1 + counter.value!!)
+            viewModelScope.launch {
+                dao.insert(CounterEntity(0))
+            }
         }
+//        db.counterDao().findByDate(Date.from())
     }
 }
