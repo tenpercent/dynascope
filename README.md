@@ -1,2 +1,2 @@
 # dynascope
-Android application for hand exercising (work in progress)
+Inspired by PowerBall, the basic idea is detecting and rewarding circular motion of a wrist holding a phone.
