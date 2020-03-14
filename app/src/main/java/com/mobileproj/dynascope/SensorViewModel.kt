@@ -20,10 +20,11 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
     private val dao get() = db.counterDao()
     private val counter: LiveData<Int> = dao.count()
+    private var intensity = MutableLiveData<Float>(0F)
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() = gyroReadings.toFloatArray().autocorr(21)
-    private val threshold = .9F
+    private val threshold = .8F
 
     private val vibrator = application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -37,9 +38,11 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
                 vibrator.vibrate(50)
             }
         }
+        intensity.postValue(timeLagSimilarity)
     }
 
-    fun registerObserver(f: (Int) -> Unit) = counter.observeForever(f)
+    fun registerCounterObserver(f: (Int) -> Unit) = counter.observeForever(f)
+    fun registerIntensityObserver(f: (Float) -> Unit) = intensity.observeForever(f)
 }
 
 fun<T> ArrayDeque<T>.addAndTrim(values: Sequence<T>, capacity: Int) {

@@ -1,6 +1,9 @@
 package com.mobileproj.dynascope
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RectShape
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -9,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import kotlin.math.max
 
 
 class ScoreDisplayActivity(): AppCompatActivity() {
@@ -34,7 +38,14 @@ class ScoreDisplayActivity(): AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-            sensorViewModel.registerObserver { c: Int -> findViewById<TextView>(R.id.counter).text = c.toString() }
+            sensorViewModel.registerCounterObserver { c: Int ->
+                findViewById<TextView>(R.id.counter).text = c.toString()
+            }
+            sensorViewModel.registerIntensityObserver { f: Float ->
+                findViewById<TextView>(R.id.counter).background = ShapeDrawable(RectShape()).apply {
+                    paint.color = Color.parseColor("#${f.toHex()}")
+                }
+            }
         }
 
         override fun onResume() {
@@ -48,3 +59,4 @@ class ScoreDisplayActivity(): AppCompatActivity() {
         }
     }
 
+fun Float.toHex() = String.format("%02x%02x00", (0xFF * (1 - max(this, 0F)) * .5).toInt(), (0xFF * max(this, 0F)).toInt())
