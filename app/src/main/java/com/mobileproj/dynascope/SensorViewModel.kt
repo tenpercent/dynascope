@@ -1,6 +1,8 @@
 package com.mobileproj.dynascope
 
 import android.app.Application
+import android.content.Context
+import android.os.Vibrator
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
@@ -12,7 +14,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val sensorReadingsCapacity = 84
     private val gyroReadingsCapacity = sensorReadingsCapacity * 3
 
-    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { 1F })
+    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { it.toFloat() })
     private var gyroReadingN = 0
 
     private val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
@@ -23,6 +25,8 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val timeLagSimilarity get() = gyroReadings.toFloatArray().autocorr(21)
     private val threshold = .9F
 
+    private val vibrator = application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
     fun receiveUpdate(values: Sequence<Float>) {
         gyroReadings.addAndTrim(values, gyroReadingsCapacity)
         gyroReadingN += 1
@@ -30,6 +34,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
         if (timeLagSimilarity > threshold) {
             viewModelScope.launch {
                 dao.insert(CounterEntity(0))
+                vibrator.vibrate(50)
             }
         }
     }
