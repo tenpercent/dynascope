@@ -10,6 +10,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import kotlin.math.max
@@ -42,9 +43,10 @@ class ScoreDisplayActivity(): AppCompatActivity() {
                 findViewById<TextView>(R.id.counter).text = c.toString()
             }
             sensorViewModel.registerIntensityObserver { f: Float ->
-                findViewById<TextView>(R.id.counter).background = ShapeDrawable(RectShape()).apply {
-                    paint.color = Color.parseColor("#${f.toHex()}")
-                }
+//                findViewById<TextView>(R.id.counter).background = ShapeDrawable(RectShape()).apply {
+//                    paint.color = Color.parseColor("#${f.toHex()}")
+//                }
+                findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
             }
         }
 
