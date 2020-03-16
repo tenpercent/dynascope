@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">DynaScope</string>
     <string name="counter">0</string>
+    <plurals name="score">
+        <item quantity="other">Total score: %d</item>>
+    </plurals>
 </resources>

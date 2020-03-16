@@ -20,7 +20,9 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
     private val dao get() = db.counterDao()
     private val counter: LiveData<Int> = dao.count()
-    private var intensity = MutableLiveData<Float>(0F)
+    private var intensity = MutableLiveData(0F)
+
+    private val sessionCount = MutableLiveData(0)
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() =
@@ -36,14 +38,19 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
         if (timeLagSimilarity > threshold) {
             viewModelScope.launch {
                 dao.insert(CounterEntity(0))
+                @Suppress("DEPRECATION")
                 vibrator.vibrate(50)
+                sessionCount.postValue(sessionCount.value!! + 1)
             }
         }
         intensity.postValue(timeLagSimilarity)
     }
 
+    fun resetSessionProgress() = sessionCount.postValue(0)
+
     fun registerCounterObserver(f: (Int) -> Unit) = counter.observeForever(f)
     fun registerIntensityObserver(f: (Float) -> Unit) = intensity.observeForever(f)
+    fun registerSessionCounterObserver(f: (Int) -> Unit) = sessionCount.observeForever(f)
 }
 
 fun<T> ArrayDeque<T>.addAndTrim(values: Sequence<T>, capacity: Int) {

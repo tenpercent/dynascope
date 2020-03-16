@@ -1,15 +1,14 @@
 package com.mobileproj.dynascope
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RectShape
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View.*
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -36,17 +35,32 @@ class ScoreDisplayActivity(): AppCompatActivity() {
             }
         }
 
+        private val newSessionButton: Button by lazy {
+            findViewById<Button>(R.id.ns)
+        }
+
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-            sensorViewModel.registerCounterObserver { c: Int ->
-                findViewById<TextView>(R.id.counter).text = c.toString()
+            newSessionButton.apply {
+                setOnClickListener { sensorViewModel.resetSessionProgress(); it.visibility = INVISIBLE }
+                visibility = INVISIBLE
             }
-            sensorViewModel.registerIntensityObserver { f: Float ->
-//                findViewById<TextView>(R.id.counter).background = ShapeDrawable(RectShape()).apply {
-//                    paint.color = Color.parseColor("#${f.toHex()}")
-//                }
-                findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
+            sensorViewModel.apply {
+                registerCounterObserver { c: Int ->
+                    findViewById<TextView>(R.id.totalCounter).text = resources.getQuantityString(R.plurals.score, c, c)
+                }
+                registerIntensityObserver { f: Float ->
+                    findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
+                }
+                registerSessionCounterObserver {
+                    findViewById<ProgressBar>(R.id.sessionProgress).apply {
+                        progress = (it / 30F).toInt()
+                        if (progress >= 100) {
+                            newSessionButton.visibility = VISIBLE
+                        }
+                    }
+                }
             }
         }
 
@@ -60,5 +74,3 @@ class ScoreDisplayActivity(): AppCompatActivity() {
             sensorManager.unregisterListener(gyroListener)
         }
     }
-
-fun Float.toHex() = String.format("%02x%02x00", (0xFF * (1 - max(this, 0F)) * .5).toInt(), (0xFF * max(this, 0F)).toInt())
