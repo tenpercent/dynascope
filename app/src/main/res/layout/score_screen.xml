@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:id="@+id/frame">
+
+    <TextView
+        android:id="@+id/totalCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/counter"
+        android:textSize="32sp" />
+
+    <ProgressBar
+        android:id="@+id/intensity"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="32dp"
+        android:max="100"
+        android:progress="0" />
+
+    <ProgressBar
+        android:id="@+id/sessionProgress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:max="100"
+        android:progress="0"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/ns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="New" />
+
+</FrameLayout>

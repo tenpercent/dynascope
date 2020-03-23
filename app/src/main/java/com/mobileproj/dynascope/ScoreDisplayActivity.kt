@@ -11,11 +11,19 @@ import android.view.View.*
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.max
 
 
-class ScoreDisplayActivity(): AppCompatActivity() {
+class ScoreDisplayActivity(): FragmentActivity() {
 
         private val sensorManager: SensorManager by lazy {
             getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -42,26 +50,28 @@ class ScoreDisplayActivity(): AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-            newSessionButton.apply {
-                setOnClickListener { sensorViewModel.resetSessionProgress(); it.visibility = INVISIBLE }
-                visibility = INVISIBLE
-            }
-            sensorViewModel.apply {
-                registerCounterObserver { c: Int ->
-                    findViewById<TextView>(R.id.totalCounter).text = resources.getQuantityString(R.plurals.score, c, c)
-                }
-                registerIntensityObserver { f: Float ->
-                    findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
-                }
-                registerSessionCounterObserver {
-                    findViewById<ProgressBar>(R.id.sessionProgress).apply {
-                        progress = (it / 30F).toInt()
-                        if (progress >= 100) {
-                            newSessionButton.visibility = VISIBLE
-                        }
-                    }
-                }
-            }
+//            findViewById<ViewPager2>(R.id.pager).currentItem = 1
+            findViewById<ViewPager2>(R.id.pager).adapter = ContentAdapter2(this, sensorViewModel)
+//            newSessionButton.apply {
+//                setOnClickListener { sensorViewModel.resetSessionProgress(); it.visibility = INVISIBLE }
+//                visibility = INVISIBLE
+//            }
+//            sensorViewModel.apply {
+//                registerCounterObserver { c: Int ->
+//                    findViewById<TextView>(R.id.totalCounter).text = resources.getQuantityString(R.plurals.score, c, c)
+//                }
+//                registerIntensityObserver { f: Float ->
+//                    findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
+//                }
+//                registerSessionCounterObserver {
+//                    findViewById<ProgressBar>(R.id.sessionProgress).apply {
+//                        progress = (it / 30F).toInt()
+//                        if (progress >= 100) {
+//                            newSessionButton.visibility = VISIBLE
+//                        }
+//                    }
+//                }
+//            }
         }
 
         override fun onResume() {
