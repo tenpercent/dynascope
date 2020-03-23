@@ -19,18 +19,12 @@ import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.max
 
 class ScoreScreenFragment(): Fragment() {
-//    private val sensorViewModel: SensorViewModel by lazy {
-//        ViewModelProvider(this).get(SensorViewModel::class.java)
-//    }
 
     lateinit var viewmodel: SensorViewModel
 
     constructor(viewmodel: SensorViewModel): this() {
         this.viewmodel = viewmodel
     }
-
-    private lateinit var contentAdapter: ContentAdapter
-    private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,9 +35,6 @@ class ScoreScreenFragment(): Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        contentAdapter = ContentAdapter(this, viewmodel)
-//        viewPager = view.findViewById(R.id.pager)
-//        viewPager.adapter = contentAdapter
 
         view.findViewById<Button>(R.id.ns)?.apply {
             setOnClickListener { viewmodel.resetSessionProgress(); visibility = INVISIBLE }
@@ -68,40 +59,3 @@ class ScoreScreenFragment(): Fragment() {
     }
 }
 
-class ContentAdapter constructor(fragment: Fragment, val viewmodel: SensorViewModel): FragmentStateAdapter(fragment) {
-
-    override fun getItemCount() = 2
-
-    override fun createFragment(position: Int): Fragment {
-//        return ScoreScreenFragment()
-        return when (position) {
-            0 -> {
-                Log.d("debugfrag", "attempting to create score screen for position $position")
-                ScoreScreenFragment(viewmodel)
-            }
-            else -> {
-                Log.d("debugfrag", "attempting to create settings screen for position $position")
-                SettingsFragment()
-            }
-        }
-    }
-}
-
-class ContentAdapter2 constructor(activity: FragmentActivity, val viewmodel: SensorViewModel): FragmentStateAdapter(activity) {
-
-    override fun getItemCount() = 2
-
-    override fun createFragment(position: Int): Fragment {
-//        return ScoreScreenFragment()
-        return when (position) {
-            0 -> {
-                Log.d("debugfrag", "attempting to create score screen for position $position")
-                ScoreScreenFragment(viewmodel)
-            }
-            else -> {
-                Log.d("debugfrag", "attempting to create settings screen for position $position")
-                SettingsFragment()
-            }
-        }
-    }
-}
