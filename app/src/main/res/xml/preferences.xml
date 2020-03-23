@@ -9,6 +9,11 @@
             app:key="voice"
             app:title="Enable voice counting"/>
 
+        <SeekBarPreference
+            app:key="speed"
+            app:title="Rotation speed"
+                />
+
         <Preference
             app:key="feedback"
             app:title="Send feedback"
