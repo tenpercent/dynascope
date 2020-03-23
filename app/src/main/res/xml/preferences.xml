@@ -2,20 +2,20 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <SwitchPreferenceCompat
-            app:key="notifications"
-            app:title="Enable message notifications"
-            app:iconSpaceReserved="false"/>
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="notifications"-->
+<!--            app:title="Enable message notifications"-->
+<!--            app:iconSpaceReserved="false"/>-->
 
-        <SwitchPreferenceCompat
-            app:key="voice"
-            app:title="Enable voice counting"
-            app:iconSpaceReserved="false"/>
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="voice"-->
+<!--            app:title="Enable voice counting"-->
+<!--            app:iconSpaceReserved="false"/>-->
 
         <SeekBarPreference
             app:key="speed"
             app:title="Rotation speed"
-            app:summary="In sensor measurements per rotation; 1 second ~ 21 measurements"
+            app:summary="Sensor measurements per rotation; 1 second ~ 21 measurements"
             app:showSeekBarValue="true"
             app:min="15"
             app:defaultValue="21"
@@ -25,16 +25,17 @@
         <SeekBarPreference
             app:key="duration"
             app:title="Session duration"
+            app:summary="Sensor measurements per workout session; 1 second ~ 21 measurements"
             app:showSeekBarValue="true"
             app:min="100"
             app:defaultValue="3000"
             app:iconSpaceReserved="false"
             android:max="5000"/>
 
-        <Preference
-            app:key="feedback"
-            app:title="Send feedback"
-            app:summary="Report technical issues or suggest new features"
-            app:iconSpaceReserved="false"/>
+<!--        <Preference-->
+<!--            app:key="feedback"-->
+<!--            app:title="Send feedback"-->
+<!--            app:summary="Report technical issues or suggest new features"-->
+<!--            app:iconSpaceReserved="false"/>-->
 
 </PreferenceScreen>
