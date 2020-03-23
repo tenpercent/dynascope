@@ -1,7 +1,6 @@
-package com.mobileproj.dynascope
+package com.mobileproj.dynascope.unused
 
 import kotlin.math.absoluteValue
-import kotlin.math.sqrt
 
 
 fun FloatArray.stats(): String {
@@ -34,16 +33,4 @@ fun FloatArray.stats(): String {
     }
 
     return "min: $min, argmin: $argmin, absmin: $absmin, argabsmin: $argabsmin, max: $max, argmax: $argmax, absmax: $absmax, argabsmax: $argabsmax"
-}
-
-fun FloatArray.innerproduct(other: FloatArray) = zip(other).map { it.first * it.second }.sum()
-
-fun FloatArray.autocorr(n: Int): Float {
-    // drop first n measurements
-    val shifted = copyOfRange(n * 3, this.size)
-    val slice = sliceArray(0..shifted.size)
-    val innerProduct = slice.innerproduct(shifted)
-    val shiftedNorm = sqrt(shifted.innerproduct(shifted))
-    val sliceNorm = sqrt(slice.innerproduct(slice))
-    return innerProduct / shiftedNorm / sliceNorm
 }

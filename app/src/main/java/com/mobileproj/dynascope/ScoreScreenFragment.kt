@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kotlin.math.max
 
-class ScoreScreenFragment(val viewmodel: SensorViewModel): Fragment() {
+class ScoreScreenFragment(private val viewmodel: SensorViewModel): Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

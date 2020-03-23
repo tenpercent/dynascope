@@ -52,12 +52,3 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     fun registerIntensityObserver(f: (Float) -> Unit) = intensity.observeForever(f)
     fun registerSessionCounterObserver(f: (Int) -> Unit) = sessionCount.observeForever(f)
 }
-
-fun<T> ArrayDeque<T>.addAndTrim(values: Sequence<T>, capacity: Int) {
-    synchronized(this) {
-        addAll(values)
-        while (size > capacity) {
-            poll()
-        }
-    }
-}
