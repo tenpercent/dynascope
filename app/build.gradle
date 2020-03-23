@@ -38,11 +38,13 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     api "androidx.activity:activity-ktx:1.1.0"
-    implementation "androidx.room:room-runtime:2.2.4"
-    implementation "androidx.room:room-ktx:2.2.4"
-    kapt "androidx.room:room-compiler:2.2.4"
+    implementation "androidx.room:room-runtime:2.2.5"
+    implementation "androidx.room:room-ktx:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
     api 'com.google.dagger:dagger:2.0'
     kapt 'com.google.dagger:dagger-compiler:2.0'
+
+    api "androidx.preference:preference-ktx:1.1.0"
 
     api group: 'com.github.wendykierp', name: 'JTransforms', version: '3.1'
     api group: 'com.google.guava', name: 'guava', version: '28.0-android'
