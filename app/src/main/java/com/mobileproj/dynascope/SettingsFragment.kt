@@ -1,9 +1,8 @@
 package com.mobileproj.dynascope
 
 import android.os.Bundle
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SeekBarPreference
+import android.util.Log
+import androidx.preference.*
 
 class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -27,6 +26,21 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                     viewModel.resetSessionProgress()
                     true
                 }
+            }
+            findPreference<SwitchPreferenceCompat>("voice")?.apply {
+                onPreferenceChangeListener =
+                    Preference.OnPreferenceChangeListener {_1, v ->
+                        Log.d("debugsensor", "voice setting knob is $v")
+                        true
+                    }
+
+            }
+            findPreference<SwitchPreferenceCompat>("notifications")?.apply {
+                onPreferenceChangeListener =
+                    Preference.OnPreferenceChangeListener {_1, v ->
+                        Log.d("debugsensor", "notification setting knob is $v")
+                        true
+                    }
             }
         }
     }

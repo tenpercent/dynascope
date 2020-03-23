@@ -2,15 +2,15 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="notifications"-->
-<!--            app:title="Enable message notifications"-->
-<!--            app:iconSpaceReserved="false"/>-->
+        <SwitchPreferenceCompat
+            app:key="notifications"
+            app:title="Enable message notifications"
+            app:iconSpaceReserved="false"/>
 
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="voice"-->
-<!--            app:title="Enable voice counting"-->
-<!--            app:iconSpaceReserved="false"/>-->
+        <SwitchPreferenceCompat
+            app:key="voice"
+            app:title="Enable voice counting"
+            app:iconSpaceReserved="false"/>
 
         <SeekBarPreference
             app:key="speed"
