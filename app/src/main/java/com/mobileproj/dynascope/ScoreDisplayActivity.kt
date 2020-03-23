@@ -36,7 +36,14 @@ class ScoreDisplayActivity(): FragmentActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-            findViewById<ViewPager2>(R.id.pager).adapter = ContentAdapter(this, sensorViewModel)
+            findViewById<ViewPager2>(R.id.pager).adapter = object: FragmentStateAdapter(this) {
+                override fun getItemCount() = 2
+
+                override fun createFragment(position: Int): Fragment = when (position) {
+                    0 -> ScoreScreenFragment(sensorViewModel)
+                    else -> SettingsFragment()
+                }
+            }
         }
 
         override fun onResume() {
@@ -49,15 +56,3 @@ class ScoreDisplayActivity(): FragmentActivity() {
             sensorManager.unregisterListener(gyroListener)
         }
     }
-
-class ContentAdapter constructor(activity: FragmentActivity, val viewmodel: SensorViewModel): FragmentStateAdapter(activity) {
-
-    override fun getItemCount() = 2
-
-    override fun createFragment(position: Int): Fragment {
-        return when (position) {
-            0 -> ScoreScreenFragment(viewmodel)
-            else -> SettingsFragment()
-        }
-    }
-}
