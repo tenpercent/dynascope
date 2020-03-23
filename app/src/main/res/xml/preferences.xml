@@ -15,6 +15,7 @@
         <SeekBarPreference
             app:key="speed"
             app:title="Rotation speed"
+            app:summary="In sensor measurements per rotation; 1 second ~ 21 measurements"
             app:showSeekBarValue="true"
             app:min="15"
             app:defaultValue="21"
