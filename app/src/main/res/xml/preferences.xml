@@ -3,19 +3,26 @@
 
         <SwitchPreferenceCompat
             app:key="notifications"
-            app:title="Enable message notifications"/>
+            app:title="Enable message notifications"
+            app:iconSpaceReserved="false"/>
 
         <SwitchPreferenceCompat
             app:key="voice"
-            app:title="Enable voice counting"/>
+            app:title="Enable voice counting"
+            app:iconSpaceReserved="false"/>
 
         <SeekBarPreference
             app:key="speed"
-            app:title="Rotation speed"/>
+            app:title="Rotation speed"
+            app:showSeekBarValue="true"
+            app:min="15"
+            app:defaultValue="21"
+            app:iconSpaceReserved="false"/>
 
         <Preference
             app:key="feedback"
             app:title="Send feedback"
-            app:summary="Report technical issues or suggest new features"/>
+            app:summary="Report technical issues or suggest new features"
+            app:iconSpaceReserved="false"/>
 
 </PreferenceScreen>
