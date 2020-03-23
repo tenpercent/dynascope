@@ -13,7 +13,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 
 
-class ScoreDisplayActivity(): FragmentActivity() {
+class MainFragmentActivity(): FragmentActivity() {
 
         private val sensorManager: SensorManager by lazy {
             getSystemService(Context.SENSOR_SERVICE) as SensorManager
