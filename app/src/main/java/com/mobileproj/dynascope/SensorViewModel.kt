@@ -14,19 +14,19 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val sensorReadingsCapacity = 84
     private val gyroReadingsCapacity = sensorReadingsCapacity * 3
 
-    private var gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { it.toFloat() })
+    private val gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { it.toFloat() })
     private var gyroReadingN = 0
 
     private val db: CounterDatabase get() = CounterDatabase.getDatabase(getApplication())
     private val dao get() = db.counterDao()
     private val counter: LiveData<Int> = dao.count()
-    private var intensity = MutableLiveData(0F)
+    private val intensity = MutableLiveData(0F)
 
     private val sessionCount = MutableLiveData(0)
 
     // setting knobs
     private val timeLag = 21
-    var sessionDuration = MutableLiveData(3000)
+    private val sessionDuration = MutableLiveData(3000)
     private val threshold = .8F
 
     val progress get(): Int? = ((sessionCount.value ?: 0) * 100F / (sessionDuration.value ?: 1)).toInt()
