@@ -11,7 +11,10 @@ import java.util.*
 // the responsibility is to hold displayed data independently of UI
 class SensorViewModel(application: Application): AndroidViewModel(application) {
 
+    private val defaultSessionDuration: Int = 3000
+    private val defaultTimeLag = 21
     private val sensorReadingsCapacity = 84
+    private val threshold = .8F
     private val gyroReadingsCapacity = sensorReadingsCapacity * 3
 
     private val gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { it.toFloat() })
@@ -23,17 +26,18 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val intensity = MutableLiveData(0F)
 
     private val sessionCount = MutableLiveData(0)
+    private val sessionCountValue get() = sessionCount.value ?: 0
 
     // setting knobs
-    private val timeLag = MutableLiveData(21)
-    private val sessionDuration = MutableLiveData(3000)
-    private val threshold = .8F
-
-    val progress get(): Int? = ((sessionCount.value ?: 0) * 100F / (sessionDuration.value ?: 1)).toInt()
+    private val timeLag = MutableLiveData(defaultTimeLag)
+    val speedValue: Int get() = timeLag.value ?: defaultTimeLag
+    private val sessionDuration = MutableLiveData(defaultSessionDuration)
+    val sessionDurationValue get() = sessionDuration.value?: defaultSessionDuration
+    val progress get(): Int? = (sessionCountValue * 100F / sessionDurationValue).toInt()
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() =
-        (timeLag.value!!-1..timeLag.value!!+1).map { gyroReadings.toFloatArray().autocorr(it)  }.max() ?: 0F
+        (speedValue-1..speedValue+1).map { gyroReadings.toFloatArray().autocorr(it)  }.max() ?: 0F
 
     private val vibrator = application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
