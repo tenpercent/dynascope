@@ -11,8 +11,7 @@
 
         <SeekBarPreference
             app:key="speed"
-            app:title="Rotation speed"
-                />
+            app:title="Rotation speed"/>
 
         <Preference
             app:key="feedback"
