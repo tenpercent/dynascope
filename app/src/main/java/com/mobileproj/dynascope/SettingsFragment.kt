@@ -29,7 +29,7 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
             }
             findPreference<SwitchPreferenceCompat>("voice")?.apply {
                 onPreferenceChangeListener =
-                    Preference.OnPreferenceChangeListener {_1, v ->
+                    Preference.OnPreferenceChangeListener {_, v ->
                         Log.d("debugsensor", "voice setting knob is $v")
                         true
                     }
@@ -37,7 +37,7 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
             }
             findPreference<SwitchPreferenceCompat>("notifications")?.apply {
                 onPreferenceChangeListener =
-                    Preference.OnPreferenceChangeListener {_1, v ->
+                    Preference.OnPreferenceChangeListener {_, v ->
                         Log.d("debugsensor", "notification setting knob is $v")
                         true
                     }
