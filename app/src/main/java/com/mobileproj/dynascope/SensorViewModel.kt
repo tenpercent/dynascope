@@ -25,7 +25,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val sessionCount = MutableLiveData(0)
 
     // setting knobs
-    private val timeLag = 21
+    private val timeLag = MutableLiveData(21)
     private val sessionDuration = MutableLiveData(3000)
     private val threshold = .8F
 
@@ -33,7 +33,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() =
-        (timeLag-1..timeLag+1).map { gyroReadings.toFloatArray().autocorr(it)  }.max() ?: 0F
+        (timeLag.value!!-1..timeLag.value!!+1).map { gyroReadings.toFloatArray().autocorr(it)  }.max() ?: 0F
 
     private val vibrator = application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
@@ -61,6 +61,11 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     fun onDurationPreferenceChange(newValue: Any?): Boolean {
         sessionDuration.postValue(newValue as Int)
         resetSessionProgress()
+        return true
+    }
+
+    fun onSpeedPreferenceChange(newValue: Any?): Boolean {
+        timeLag.postValue(newValue as Int)
         return true
     }
 }
