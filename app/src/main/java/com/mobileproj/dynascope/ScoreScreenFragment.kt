@@ -18,13 +18,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.max
 
-class ScoreScreenFragment(): Fragment() {
-
-    lateinit var viewmodel: SensorViewModel
-
-    constructor(viewmodel: SensorViewModel): this() {
-        this.viewmodel = viewmodel
-    }
+class ScoreScreenFragment(val viewmodel: SensorViewModel): Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
