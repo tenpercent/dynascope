@@ -26,10 +26,10 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
 
     // setting knobs
     private val timeLag = 21
-    private val sessionDuration = 3000
+    var sessionDuration = MutableLiveData(3000)
     private val threshold = .8F
 
-    val progress get(): Int? = ((sessionCount.value ?: 0) * 100F / sessionDuration).toInt()
+    val progress get(): Int? = ((sessionCount.value ?: 0) * 100F / (sessionDuration.value ?: 1)).toInt()
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() =

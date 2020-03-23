@@ -21,6 +21,15 @@
             app:iconSpaceReserved="false"
             android:max="30"/>
 
+        <SeekBarPreference
+            app:key="duration"
+            app:title="Session duration"
+            app:showSeekBarValue="true"
+            app:min="100"
+            app:defaultValue="3000"
+            app:iconSpaceReserved="false"
+            android:max="5000"/>
+
         <Preference
             app:key="feedback"
             app:title="Send feedback"
