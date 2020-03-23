@@ -37,7 +37,7 @@ class ScoreScreenFragment(private val viewmodel: SensorViewModel): Fragment() {
             }
             registerSessionCounterObserver {
                 view.findViewById<ProgressBar>(R.id.sessionProgress).apply {
-                    progress = (it / 30F).toInt()
+                    progress = viewmodel.progress
                     if (progress >= 100) {
                         view.findViewById<Button>(R.id.ns).visibility = VISIBLE
                     }
