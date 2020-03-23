@@ -26,7 +26,7 @@ class ScoreScreenFragment(val viewmodel: SensorViewModel): Fragment() {
 
         view.findViewById<Button>(R.id.ns)?.apply {
             setOnClickListener { viewmodel.resetSessionProgress(); visibility = INVISIBLE }
-            visibility = INVISIBLE
+            performClick()
         }
         viewmodel.apply {
             registerCounterObserver { c: Int ->
