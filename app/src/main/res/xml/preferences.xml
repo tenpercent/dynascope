@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <SwitchPreferenceCompat
             app:key="notifications"
@@ -17,7 +18,8 @@
             app:showSeekBarValue="true"
             app:min="15"
             app:defaultValue="21"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="false"
+            android:max="30"/>
 
         <Preference
             app:key="feedback"
