@@ -31,6 +31,10 @@
             app:defaultValue="3000"
             app:iconSpaceReserved="false"
             android:max="5000"/>
+        <Preference
+            app:key="reset"
+            app:title="Reset session"
+            app:iconSpaceReserved="false"/>
 
 <!--        <Preference-->
 <!--            app:key="feedback"-->

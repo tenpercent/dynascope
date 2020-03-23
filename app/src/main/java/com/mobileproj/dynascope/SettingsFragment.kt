@@ -22,6 +22,12 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                     }
                 value = viewModel.speedValue
             }
+            findPreference<Preference>("reset")?.apply {
+                onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                    viewModel.resetSessionProgress()
+                    true
+                }
+            }
         }
     }
 }
