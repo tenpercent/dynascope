@@ -9,10 +9,6 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
         preferenceManager.findPreference<SeekBarPreference>("duration")?.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { preference, newValue ->
-                viewModel.sessionDuration.postValue(newValue as Int)
-                viewModel.resetSessionProgress()
-                true
-            }
+            Preference.OnPreferenceChangeListener { _, newValue -> viewModel.onDurationPreferenceChange(newValue) }
     }
 }

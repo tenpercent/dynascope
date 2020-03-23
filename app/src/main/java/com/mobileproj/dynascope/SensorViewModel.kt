@@ -57,4 +57,10 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     fun registerCounterObserver(f: (Int) -> Unit) = counter.observeForever(f)
     fun registerIntensityObserver(f: (Float) -> Unit) = intensity.observeForever(f)
     fun registerSessionCounterObserver(f: (Int) -> Unit) = sessionCount.observeForever(f)
+
+    fun onDurationPreferenceChange(newValue: Any?): Boolean {
+        sessionDuration.postValue(newValue as Int)
+        resetSessionProgress()
+        return true
+    }
 }
