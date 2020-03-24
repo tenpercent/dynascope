@@ -48,8 +48,9 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                 "feedback" -> {
                     p.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                         val intent = Intent(ACTION_SENDTO).apply {
-                            type = "text/plain"
-                            putExtra(EXTRA_EMAIL, "noreply@noreply.com")
+                            type = "*/*"
+                            data = Uri.parse("mailto:")
+                            putExtra(EXTRA_EMAIL, arrayOf("noreply@noreply.com"))
                             putExtra(EXTRA_SUBJECT, "Dynascope feedback")
                         }
                         startActivity(createChooser(intent, "Send email"))
