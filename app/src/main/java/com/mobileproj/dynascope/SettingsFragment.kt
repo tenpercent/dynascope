@@ -1,7 +1,10 @@
 package com.mobileproj.dynascope
 
 import android.content.Intent
-import android.content.Intent.*
+import android.content.Intent.ACTION_SENDTO
+import android.content.Intent.EXTRA_EMAIL
+import android.content.Intent.EXTRA_SUBJECT
+import android.content.Intent.createChooser
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
