@@ -2,12 +2,15 @@ package com.mobileproj.dynascope
 
 import android.os.Bundle
 import android.util.Log
-import androidx.preference.*
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SeekBarPreference
+import androidx.preference.children
 
 class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
-        preferenceManager.preferenceScreen.children.forEach { p ->
+        preferenceManager.preferenceScreen.children.forEach { p: Preference ->
             when (p.key) {
                 "duration" -> {
                     p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
@@ -34,7 +37,7 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                     }
                 }
                 "notifications" -> {
-                    p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener {_, v ->
+                    p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
                         Log.d("debugsensor", "notification setting knob is $v")
                         true
                     }
