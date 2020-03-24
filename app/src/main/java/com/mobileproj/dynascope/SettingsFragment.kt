@@ -1,8 +1,8 @@
 package com.mobileproj.dynascope
 
 import android.content.Intent
-import android.content.Intent.ACTION_SENDTO
-import android.content.Intent.createChooser
+import android.content.Intent.*
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.preference.Preference
@@ -47,9 +47,10 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                 }
                 "feedback" -> {
                     p.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                        val intent = Intent().apply {
+                        val intent = Intent(ACTION_SENDTO).apply {
                             type = "text/plain"
-                            action = ACTION_SENDTO
+                            putExtra(EXTRA_EMAIL, "noreply@noreply.com")
+                            putExtra(EXTRA_SUBJECT, "Dynascope feedback")
                         }
                         startActivity(createChooser(intent, "Send email"))
                         true
