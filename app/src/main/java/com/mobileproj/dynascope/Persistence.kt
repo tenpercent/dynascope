@@ -2,7 +2,14 @@ package com.mobileproj.dynascope
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Database
+import androidx.room.Entity
+import androidx.room.Insert
+import androidx.room.PrimaryKey
+import androidx.room.Query
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
 @Entity
 data class CounterEntity(@PrimaryKey(autoGenerate = true) val id: Int)
