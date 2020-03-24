@@ -1,6 +1,6 @@
 package com.mobileproj.dynascope
 
-import java.util.*
+import java.util.ArrayDeque
 import kotlin.math.sqrt
 
 fun FloatArray.innerproduct(other: FloatArray) = zip(other).map { it.first * it.second }.sum()
