@@ -35,12 +35,14 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                 }
                 "voice" -> {
                     p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
+                        // TODO implement voice feedback
                         Log.d("debugsensor", "voice setting knob is $v")
                         true
                     }
                 }
                 "notifications" -> {
                     p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
+                        // TODO implement notifications
                         Log.d("debugsensor", "notification setting knob is $v")
                         true
                     }
@@ -50,6 +52,7 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                         val intent = Intent(ACTION_SENDTO).apply {
                             type = "*/*"
                             data = Uri.parse("mailto:")
+                            // TODO replace fillers
                             putExtra(EXTRA_EMAIL, arrayOf("noreply@noreply.com"))
                             putExtra(EXTRA_SUBJECT, "Dynascope feedback")
                         }
