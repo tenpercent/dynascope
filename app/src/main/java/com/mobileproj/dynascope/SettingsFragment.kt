@@ -1,5 +1,8 @@
 package com.mobileproj.dynascope
 
+import android.content.Intent
+import android.content.Intent.ACTION_SENDTO
+import android.content.Intent.createChooser
 import android.os.Bundle
 import android.util.Log
 import androidx.preference.Preference
@@ -39,6 +42,16 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                 "notifications" -> {
                     p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
                         Log.d("debugsensor", "notification setting knob is $v")
+                        true
+                    }
+                }
+                "feedback" -> {
+                    p.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                        val intent = Intent().apply {
+                            type = "text/plain"
+                            action = ACTION_SENDTO
+                        }
+                        startActivity(createChooser(intent, "Send email"))
                         true
                     }
                 }

@@ -36,10 +36,10 @@
             app:title="Reset session"
             app:iconSpaceReserved="false"/>
 
-<!--        <Preference-->
-<!--            app:key="feedback"-->
-<!--            app:title="Send feedback"-->
-<!--            app:summary="Report technical issues or suggest new features"-->
-<!--            app:iconSpaceReserved="false"/>-->
+        <Preference
+            app:key="feedback"
+            app:title="Send feedback"
+            app:summary="Report technical issues or suggest new features"
+            app:iconSpaceReserved="false"/>
 
 </PreferenceScreen>
