@@ -20,44 +20,44 @@ import androidx.viewpager2.widget.ViewPager2
  */
 class MainFragmentActivity(): FragmentActivity() {
 
-        private val sensorManager: SensorManager by lazy {
-            getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        }
-        private val gyroSensor: Sensor by lazy {
-            sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
-        }
-        private val sensorViewModel: SensorViewModel by lazy {
-            ViewModelProvider(this).get(SensorViewModel::class.java)
-        }
+    private val sensorManager: SensorManager by lazy {
+        getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    }
+    private val gyroSensor: Sensor by lazy {
+        sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+    }
+    private val sensorViewModel: SensorViewModel by lazy {
+        ViewModelProvider(this).get(SensorViewModel::class.java)
+    }
 
-        private val gyroListener = object: SensorEventListener {
-            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    private val gyroListener = object: SensorEventListener {
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
-            override fun onSensorChanged(event: SensorEvent?) {
-                sensorViewModel.receiveUpdate(event?.values?.asSequence() as Sequence<Float>)
-            }
-        }
-
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_main)
-            findViewById<ViewPager2>(R.id.pager).adapter = object: FragmentStateAdapter(this) {
-                override fun getItemCount() = 2
-
-                override fun createFragment(position: Int): Fragment = when (position) {
-                    0 -> ScoreScreenFragment(sensorViewModel)
-                    else -> SettingsFragment(sensorViewModel)
-                }
-            }
-        }
-
-        override fun onResume() {
-            super.onResume()
-            sensorManager.registerListener(gyroListener, gyroSensor, 50000)
-        }
-
-        override fun onPause() {
-            super.onPause()
-            sensorManager.unregisterListener(gyroListener)
+        override fun onSensorChanged(event: SensorEvent?) {
+            sensorViewModel.receiveUpdate(event?.values?.asSequence() as Sequence<Float>)
         }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        findViewById<ViewPager2>(R.id.pager).adapter = object: FragmentStateAdapter(this) {
+            override fun getItemCount() = 2
+
+            override fun createFragment(position: Int): Fragment = when (position) {
+                0 -> ScoreScreenFragment(sensorViewModel)
+                else -> SettingsFragment(sensorViewModel)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(gyroListener, gyroSensor, 50000)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(gyroListener)
+    }
+}
