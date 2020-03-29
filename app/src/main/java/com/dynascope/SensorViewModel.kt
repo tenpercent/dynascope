@@ -35,7 +35,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     private val timeLag = MutableLiveData(defaultTimeLag)
     val speedValue: Int get() = timeLag.value ?: defaultTimeLag
     private val sessionDuration = MutableLiveData(defaultSessionDuration)
-    val sessionDurationValue get() = sessionDuration.value?: defaultSessionDuration
+    val sessionDurationValue get() = sessionDuration.value ?: defaultSessionDuration
     val progress get(): Int? = (sessionCountValue * 100F / sessionDurationValue).toInt()
 
     // cosine similarity with a time-lagged version of itself
@@ -53,7 +53,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
                 dao.insert(CounterEntity(0))
                 @Suppress("DEPRECATION")
                 vibrator.vibrate(50)
-                sessionCount.postValue(sessionCount.value!! + 1)
+                sessionCount.postValue(sessionCountValue + 1)
             }
         }
         intensity.postValue(timeLagSimilarity)
