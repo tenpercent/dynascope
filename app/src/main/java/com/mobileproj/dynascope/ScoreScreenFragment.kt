@@ -14,6 +14,7 @@ import kotlin.math.max
 
 /**
  * UI for the page that displays score, intensity bar and session progress bar
+ * See also [R.layout.score_screen]
  */
 class ScoreScreenFragment(private val viewmodel: SensorViewModel): Fragment() {
 

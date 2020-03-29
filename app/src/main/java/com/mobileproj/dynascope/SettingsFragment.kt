@@ -15,6 +15,7 @@ import androidx.preference.children
 
 /**
  * UI for the page that displays settings
+ * See also [R.xml.preferences]
  */
 class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
