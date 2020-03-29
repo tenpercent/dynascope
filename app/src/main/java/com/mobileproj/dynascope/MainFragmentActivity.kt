@@ -14,9 +14,9 @@ import androidx.viewpager2.widget.ViewPager2
 
 /**
  * The main and the only activity in this application.
- * It subclasses from FragmentActivity as we are using ViewPager2
+ * It subclasses from [FragmentActivity] as we are using [ViewPager2]
  * and the adapter that provides fragments to viewpager to display
- * needs a reference to FragmentActivity in its constructor.
+ * needs a reference to [FragmentActivity] in its constructor.
  */
 class MainFragmentActivity(): FragmentActivity() {
 
