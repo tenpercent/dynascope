@@ -1,4 +1,4 @@
-package com.mobileproj.dynascope
+package com.dynascope
 
 import android.content.Context
 import androidx.lifecycle.LiveData

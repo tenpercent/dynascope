@@ -1,4 +1,4 @@
-package com.mobileproj.dynascope
+package com.dynascope
 
 import android.app.Application
 import android.content.Context

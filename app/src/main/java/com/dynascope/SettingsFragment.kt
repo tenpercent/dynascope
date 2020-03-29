@@ -1,4 +1,4 @@
-package com.mobileproj.dynascope
+package com.dynascope
 
 import android.content.Intent
 import android.content.Intent.ACTION_SENDTO

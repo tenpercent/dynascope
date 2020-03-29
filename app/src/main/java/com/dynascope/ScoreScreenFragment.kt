@@ -1,4 +1,4 @@
-package com.mobileproj.dynascope
+package com.dynascope
 
 import android.os.Bundle
 import android.view.LayoutInflater

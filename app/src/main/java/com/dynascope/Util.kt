@@ -1,4 +1,4 @@
-package com.mobileproj.dynascope
+package com.dynascope
 
 import java.util.ArrayDeque
 import kotlin.math.sqrt
