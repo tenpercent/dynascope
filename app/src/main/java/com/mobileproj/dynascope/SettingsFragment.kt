@@ -13,21 +13,29 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.children
 
+/**
+ * UI for the page that displays settings
+ */
 class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
+        /**
+         * Tie logic to UI elements by setting appropriate callbacks
+         */
         preferenceManager.preferenceScreen.children.forEach { p: Preference ->
             when (p.key) {
                 "duration" -> {
                     p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
                         viewModel.onDurationPreferenceChange(v)
                     }
+                    // pull the stored value to UI
                     (p as SeekBarPreference).value = viewModel.sessionDurationValue
                 }
                 "speed" -> {
                     p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
                         viewModel.onSpeedPreferenceChange(v)
                     }
+                    // pull the stored value to UI
                     (p as SeekBarPreference).value = viewModel.speedValue
                 }
                 "reset" -> {

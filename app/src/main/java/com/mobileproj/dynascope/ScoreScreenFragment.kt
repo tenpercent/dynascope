@@ -12,6 +12,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kotlin.math.max
 
+/**
+ * UI for the page that displays score, intensity bar and session progress bar
+ */
 class ScoreScreenFragment(private val viewmodel: SensorViewModel): Fragment() {
 
     override fun onCreateView(
@@ -29,12 +32,15 @@ class ScoreScreenFragment(private val viewmodel: SensorViewModel): Fragment() {
             performClick()
         }
         viewmodel.apply {
+            /** Whenever [viewmodel]'s counter property is updated, UI will update according to this callback */
             registerCounterObserver { c: Int ->
                 view.findViewById<TextView>(R.id.totalCounter).text = resources.getQuantityString(R.plurals.score, c, c)
             }
+            /** Whenever [viewmodel]'s intensity property is updated, UI will update according to this callback */
             registerIntensityObserver { f: Float ->
                 view.findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
             }
+            /** Whenever [viewmodel]'s session progress property is updated, UI will update according to this callback */
             registerSessionCounterObserver {
                 view.findViewById<ProgressBar>(R.id.sessionProgress).apply {
                     progress = viewmodel.progress ?: 0
