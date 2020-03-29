@@ -36,7 +36,7 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
     val speedValue: Int get() = timeLag.value ?: defaultTimeLag
     private val sessionDuration = MutableLiveData(defaultSessionDuration)
     val sessionDurationValue get() = sessionDuration.value ?: defaultSessionDuration
-    val progress get(): Int? = (sessionCountValue * 100F / sessionDurationValue).toInt()
+    val progress get(): Int = (sessionCountValue * 100F / sessionDurationValue).toInt()
 
     // cosine similarity with a time-lagged version of itself
     private val timeLagSimilarity get() =
