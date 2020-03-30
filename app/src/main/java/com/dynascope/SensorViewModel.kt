@@ -113,14 +113,14 @@ class SensorViewModel(application: Application): AndroidViewModel(application) {
      *  with the new value of [sessionCount] as the single argument to [f] */
     fun registerSessionCounterObserver(f: (Int) -> Unit) = sessionCount.observeForever(f)
 
-    /** when the session duration setting is changed, the value provided in the setting is given to this method*/
+    /** when the session duration setting is changed, the value provided in the setting is given to this method */
     fun onDurationPreferenceChange(newValue: Any?): Boolean {
         sessionDuration.postValue(newValue as Int)
         resetSessionProgress()
         return true
     }
 
-    /** when the rotation speed setting is changed, the value provided in the setting is given to this method*/
+    /** when the rotation speed setting is changed, the value provided in the setting is given to this method */
     fun onSpeedPreferenceChange(newValue: Any?): Boolean {
         timeLag.postValue(newValue as Int)
         return true
