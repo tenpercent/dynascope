@@ -11,15 +11,33 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import java.util.ArrayDeque
 
-// the responsibility is to hold displayed data independently of UI
+/**
+ * This class stores data that is displayed in UI but outlives it,
+ * as fragments and activities may be destroyed at arbitrary moment.
+ * We use the ViewModel library and subclass from [AndroidViewModel] in that library.
+ *
+ * Also, for simplicity, here we also perform talking to a database
+ * and business logic related to motion intensity estimation from sensor readings
+ */
 class SensorViewModel(application: Application): AndroidViewModel(application) {
 
+    // hardcoded constants:
+    // the default duration of training session, in sensor readings
+    // (the actual one may be changed in settings)
     private val defaultSessionDuration: Int = 3000
+    // the default time lag for cosine similarity with self in the past, in sensor readings
+    // (the actual time lag may be changed in settings)
     private val defaultTimeLag = 21
+    // number of sensor readings to store
     private val sensorReadingsCapacity = 84
+    // as cosine similarity is in range (-1, 1), and it's hard to get perfect similarity,
+    // the rotations progress starts when the similarity is greater than this threshold
     private val threshold = .8F
+    // each sensor reading is a triple, so this is the final storage capacity
+    // for the data structure storing gyroscope readings
     private val gyroReadingsCapacity = sensorReadingsCapacity * 3
 
+    // a window of sensor readings approximately 4 seconds long
     private val gyroReadings = ArrayDeque((0..gyroReadingsCapacity).map { it.toFloat() })
     private var gyroReadingN = 0
 
