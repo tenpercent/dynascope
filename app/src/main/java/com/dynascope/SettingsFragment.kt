@@ -20,9 +20,7 @@ import androidx.preference.children
 class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
-        /**
-         * Tie logic to UI elements by setting appropriate callbacks
-         */
+        // Tie logic to UI elements by setting appropriate callbacks
         preferenceManager.preferenceScreen.children.forEach { p: Preference ->
             when (p.key) {
                 "duration" -> {
