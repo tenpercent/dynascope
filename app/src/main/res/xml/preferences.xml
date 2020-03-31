@@ -42,4 +42,9 @@
             app:summary="Report technical issues or suggest new features"
             app:iconSpaceReserved="false"/>
 
+        <Preference
+            app:key="website"
+            app:title="Go to website"
+            app:iconSpaceReserved="false" />
+
 </PreferenceScreen>
