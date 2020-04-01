@@ -35,18 +35,21 @@ class ScoreScreenFragment(private val viewmodel: SensorViewModel): Fragment() {
         /** Whenever [viewmodel]'s properties are updated, UI will update according to these callbacks */
         viewmodel.apply {
             registerCounterObserver { c: Int ->
-                view.findViewById<TextView>(R.id.totalCounter).text = resources.getQuantityString(R.plurals.score, c, c)
+                if (isAdded)
+                    view.findViewById<TextView>(R.id.totalCounter).text = resources.getQuantityString(R.plurals.score, c, c)
             }
             registerIntensityObserver { f: Float ->
-                view.findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
+                if (isAdded)
+                    view.findViewById<ProgressBar>(R.id.intensity).progress = max(0F, f * 100).toInt()
             }
             registerSessionCounterObserver {
-                view.findViewById<ProgressBar>(R.id.sessionProgress).apply {
-                    progress = viewmodel.progress
-                    if (progress >= 100) {
-                        view.findViewById<Button>(R.id.ns).visibility = VISIBLE
+                if (isAdded)
+                    view.findViewById<ProgressBar>(R.id.sessionProgress).apply {
+                        progress = viewmodel.progress
+                        if (progress >= 100) {
+                            view.findViewById<Button>(R.id.ns).visibility = VISIBLE
+                        }
                     }
-                }
             }
         }
     }

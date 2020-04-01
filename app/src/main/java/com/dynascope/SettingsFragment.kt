@@ -25,14 +25,16 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
                         viewModel.onDurationPreferenceChange(v)
                     }
                     // pull the stored value to UI
-                    (p as SeekBarPreference).value = viewModel.sessionDurationValue
+                    if (isAdded)
+                        (p as SeekBarPreference).value = viewModel.sessionDurationValue
                 }
                 "speed" -> {
                     p.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, v ->
                         viewModel.onSpeedPreferenceChange(v)
                     }
                     // pull the stored value to UI
-                    (p as SeekBarPreference).value = viewModel.speedValue
+                    if (isAdded)
+                        (p as SeekBarPreference).value = viewModel.speedValue
                 }
                 "reset" -> {
                     p.onPreferenceClickListener = Preference.OnPreferenceClickListener {
