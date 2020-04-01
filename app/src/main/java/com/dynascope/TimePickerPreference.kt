@@ -11,7 +11,6 @@ class TimePickerPreference(context: Context, attrs: AttributeSet?, defStyleAttr:
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.dialogPreferenceStyle)
     constructor(context: Context) : this(context, null)
 
-
     override fun getDialogLayoutResource(): Int {
         return R.layout.time_picker
     }
