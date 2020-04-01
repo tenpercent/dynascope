@@ -8,7 +8,7 @@ class TimePickerPreference(context: Context, attrs: AttributeSet?, defStyleAttr:
     DialogPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, defStyleAttr)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.dialogPreferenceStyle)
     constructor(context: Context) : this(context, null)
 
 
