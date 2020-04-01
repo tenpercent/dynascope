@@ -20,9 +20,10 @@ class TimePickerFragment() : PreferenceDialogFragmentCompat() {
 
             alarmMgr.set(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + 10 * 1000,
+                SystemClock.elapsedRealtime() + 5 * 1000,
                 alarmIntent
             )
+            Log.d("debugsensor", "Alarm set!")
         }
     }
     companion object {

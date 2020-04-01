@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 
 class AlarmReceiver(): BroadcastReceiver() {
@@ -21,6 +22,7 @@ class AlarmReceiver(): BroadcastReceiver() {
                 setContentIntent(pendingIntent)
             }.build()
             (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, notification)
+            Log.d("debugsensor", "Alarm received")
         }
     }
 }
