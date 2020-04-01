@@ -82,4 +82,17 @@ class SettingsFragment(private val viewModel: SensorViewModel) : PreferenceFragm
             }
         }
     }
+
+    override fun onDisplayPreferenceDialog(preference: Preference?) {
+        if (preference is TimePickerPreference) {
+            TimePickerFragment.newInstance(preference.key).apply {
+                setTargetFragment(this@SettingsFragment, 1)
+                this@SettingsFragment.fragmentManager?.apply {
+                    show(this, "DIALOG")
+                }
+            }
+        } else {
+            super.onDisplayPreferenceDialog(preference)
+        }
+    }
 }

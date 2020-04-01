@@ -2,8 +2,9 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <SwitchPreferenceCompat
+        <com.dynascope.TimePickerPreference
             app:key="notifications"
+            android:key="picker"
             app:title="Enable message notifications"
             app:iconSpaceReserved="false"/>
 
